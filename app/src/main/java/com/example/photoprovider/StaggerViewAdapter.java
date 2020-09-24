@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,13 +64,16 @@ public class StaggerViewAdapter extends RecyclerView.Adapter<StaggerViewAdapter.
         public void setData(PhotoBean photoBean) {
             Log.d("photo","y:"+photoBean.getImgPath());
             File file = new File(photoBean.getImgPath());
-            Uri uri=Uri.fromFile(new File(photoBean.getImgPath()));
-            Bitmap bm = BitmapFactory.decodeFile(photoBean.getImgPath());
-//            icon.setImageBitmap(bm);
+            if(file!=null){
+
+                Uri uri=Uri.fromFile(new File(photoBean.getImgPath()));
+                Bitmap bm = BitmapFactory.decodeFile(photoBean.getImgPath());
+                icon.setImageBitmap(bm);
+            }
 //            String ImagePath = photoBean.getImgPath();
 //            Uri uri = Uri.parse(ImagePath);
 //            icon.setImageURI(uri);
-            path.setText(photoBean.getImgPath());
+//            path.setText(photoBean.getImgPath());
         }
     }
 }
