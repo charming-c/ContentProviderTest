@@ -1,8 +1,10 @@
 package com.example.photoprovider;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.File;
@@ -35,12 +38,17 @@ public class StaggerViewAdapter extends RecyclerView.Adapter<StaggerViewAdapter.
 
         LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
         View view=layoutInflater.inflate(R.layout.photo_item,parent,false);
+        Point point= ScreenSizeUtils.getScreenSize(view.getContext());
+        RecyclerView.LayoutParams layoutParams=new RecyclerView.LayoutParams(point.x/4,point.x/4);
+        view.setLayoutParams(layoutParams);
         return new InnerHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull StaggerViewAdapter.InnerHolder holder, int position) {
         if(photos!=null){
+            ImageView imageView = holder.itemView.findViewById(R.id.photo);
+            Glide.with(imageView.getContext()).load(photos.get(position).getImgPath()).into(imageView);
             holder.setData(photos.get(position));
             Log.d("photo","x:"+photos.get(position).getImgPath());
         }
@@ -66,9 +74,9 @@ public class StaggerViewAdapter extends RecyclerView.Adapter<StaggerViewAdapter.
             File file = new File(photoBean.getImgPath());
             if(file!=null){
 
-                Uri uri=Uri.fromFile(new File(photoBean.getImgPath()));
-                Bitmap bm = BitmapFactory.decodeFile(photoBean.getImgPath());
-                icon.setImageBitmap(bm);
+//                Uri uri=Uri.fromFile(new File(photoBean.getImgPath()));
+//                Bitmap bm = BitmapFactory.decodeFile(photoBean.getImgPath());
+//                icon.setImageBitmap(bm);
             }
 //            String ImagePath = photoBean.getImgPath();
 //            Uri uri = Uri.parse(ImagePath);
