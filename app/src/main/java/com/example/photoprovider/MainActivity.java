@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Fresco.initialize(this);
-        Glide.with(this);// 绑定Context
+        Glide.with(this);
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE)){
                 //弹窗解释为何需要该权限，再次请求权限
@@ -140,10 +140,8 @@ public class MainActivity extends AppCompatActivity {
                         mGroupMap.get(parentName).add(new PhotoBean(path, false));
                     }
                 }
-                //添加全部图片的集合
                 mGroupMap.put("全部图片", photos);
 
-                //通知Handler扫描图片完成
                 handler.sendEmptyMessage(SCAN_OK);
                 cursor.close();
                 }
