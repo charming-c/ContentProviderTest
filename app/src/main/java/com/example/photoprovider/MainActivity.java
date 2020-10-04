@@ -106,6 +106,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter=new StaggerViewAdapter(photos);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new StaggerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Log.d("1","dianji");
+            }
+        });
         if(photos.size()==0){
             getPhotos();
         }

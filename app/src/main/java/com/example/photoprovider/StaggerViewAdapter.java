@@ -27,6 +27,7 @@ import java.util.List;
 
 public class StaggerViewAdapter extends RecyclerView.Adapter<StaggerViewAdapter.InnerHolder> {
     private List<PhotoBean> photos;
+    private OnItemClickListener mOnItemClickListener;
 
     public StaggerViewAdapter(List<PhotoBean> photos) {
         this.photos=photos;
@@ -45,15 +46,31 @@ public class StaggerViewAdapter extends RecyclerView.Adapter<StaggerViewAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StaggerViewAdapter.InnerHolder holder, int position) {
+    public void onBindViewHolder(@NonNull StaggerViewAdapter.InnerHolder holder, final int position) {
         if(photos!=null){
             ImageView imageView = holder.itemView.findViewById(R.id.photo);
             Glide.with(imageView.getContext()).load(photos.get(position).getImgPath()).into(imageView);
             holder.setData(photos.get(position));
             Log.d("photo","x:"+photos.get(position).getImgPath());
         }
+        if(mOnItemClickListener!=null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(position);
+                }
+            });
+        }
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        //设置一个监听器，其实就是设置一个回调的接口
+        this.mOnItemClickListener=listener;
+
     }
 
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
     @Override
     public int getItemCount() {
         return photos.size();
