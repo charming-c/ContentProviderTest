@@ -43,14 +43,14 @@ public class MainActivity extends AppCompatActivity {
     private StaggerViewAdapter adapter;
     private List<PhotoBean> photos = new ArrayList<>();
 
-    private final Handler handler = new Handler() {
+    private final  Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 1) {
                 //扫描完毕,关闭进度dialog
                 mProgressDialog.dismiss();
-                adapter.notifyDataSetChanged();
+//                adapter.notifyDataSetChanged();
             }
         }
     };
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         if(photos.size()==0){
             getPhotos();
         }
+        Log.d("1","2"+photos.size());
     }
 //  利用contentProvider扫描，获取手机中的图片，此方法运行在子线程里，方便快捷
     private void getPhotos() {
@@ -135,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
                     PhotoBean bean = new PhotoBean(path,false);
                     photos.add(bean);
-                    Log.d("photo","x:"+bean.getImgPath());
+//                    Log.d("photo","x:"+bean.getImgPath());
                     String parentName = new File(path).getParentFile().getName();
                     if (!mGroupMap.containsKey(parentName)) {
                         List<PhotoBean> childList = new ArrayList<PhotoBean>();
